@@ -69,7 +69,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   /* center col locked to video's 122:173 ratio based on available height */
   grid-template-columns: minmax(0, 1fr) minmax(0, 2.254fr) minmax(0, 1fr);
-  gap: calc(var(--s) * 24);
+  gap: calc(var(--s) * 9);
   height: 100vh;
   height: 100svh;
   padding: calc(var(--s) * 24) calc(var(--s) * 24);
@@ -121,7 +121,7 @@ img { display: block; max-width: 100%; }
   background-size: calc(var(--s) * 12) calc(var(--s) * 12);
 }
 
-.card--left  .card__bg { object-position: 34% 42%; }
+.card--left  .card__bg { object-position: 34% 70%; }
 .card--right .card__bg { object-position: 50% 50%; }
 
 /* ---------- left column ------------------------------------------------- */
@@ -130,7 +130,7 @@ img { display: block; max-width: 100%; }
   position: absolute;
   z-index: 3;
   left: calc(var(--s) * 47);
-  top: calc(var(--s) * 46);
+  top: calc(var(--s) * 80);
   width: calc(var(--s) * 240);
   min-width: 120px;
 }
