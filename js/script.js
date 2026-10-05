@@ -7,6 +7,55 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
+  /* A pointer dot leads while the ring trails for fine pointers. */
+  const cursor = document.querySelector('.custom-cursor');
+  const cursorDot = document.querySelector('.custom-cursor__dot');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if (cursor && cursorDot && finePointer.matches && !reduceMotion.matches) {
+    const body = document.body;
+    let targetX = 0;
+    let targetY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    let animationFrame = 0;
+
+    const moveCursor = () => {
+      cursorX += (targetX - cursorX) * 0.12;
+      cursorY += (targetY - cursorY) * 0.12;
+      cursor.style.left = `${cursorX}px`;
+      cursor.style.top = `${cursorY}px`;
+      if (Math.abs(targetX - cursorX) > 0.1 || Math.abs(targetY - cursorY) > 0.1) {
+        animationFrame = window.requestAnimationFrame(moveCursor);
+      } else {
+        animationFrame = 0;
+      }
+    };
+
+    const queueCursorMove = () => {
+      if (!animationFrame) animationFrame = window.requestAnimationFrame(moveCursor);
+    };
+
+    document.addEventListener('pointermove', (event) => {
+      body.classList.add('has-custom-cursor');
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursorDot.style.left = `${event.clientX}px`;
+      cursorDot.style.top = `${event.clientY}px`;
+      cursor.classList.add('is-visible');
+      cursorDot.classList.add('is-visible');
+      queueCursorMove();
+    });
+
+    document.documentElement.addEventListener('pointerenter', () => {
+      body.classList.add('has-custom-cursor');
+    });
+    document.documentElement.addEventListener('pointerleave', () => {
+      body.classList.remove('has-custom-cursor');
+      cursor.classList.remove('is-visible');
+      cursorDot.classList.remove('is-visible');
+    });
+  }
+
   /* 1 — start the entrance once web fonts are in, so text never jumps ---- */
   const reveal = () => root.classList.add('is-ready');
   if (document.fonts && document.fonts.ready) {
