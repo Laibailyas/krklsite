@@ -125,8 +125,7 @@ img { display: block; max-width: 100%; }
 
 .stage {
   display: grid;
-  /* Keep the left rail compact and give the right image a little breathing room. */
-  grid-template-columns: 14vw 65vw 21vw;
+  grid-template-columns: 17.5vw 65vw 17.5vw;
   gap: 0;
   height: 100vh;
   height: 100svh;
@@ -170,18 +169,26 @@ img { display: block; max-width: 100%; }
 .card--left  .card__bg { object-position: 34% 42%; }
 .card--right .card__bg { object-position: 50% 50%; }
 
+.card--left,
 .card--right {
-  --right-bleed: clamp(24px, 4vw, 56px);
+  --side-bleed: clamp(20px, 3vw, 44px);
   z-index: 2;
   overflow: visible;
 }
 
-.card--right .card__bg {
-  left: calc(0px - var(--right-bleed));
-  width: calc(100% + var(--right-bleed));
+.card--left .card__bg {
+  width: calc(100% + var(--side-bleed));
   max-width: none;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--right-bleed));
-          mask-image: linear-gradient(to right, transparent, #000 var(--right-bleed));
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--side-bleed)), transparent 100%);
+          mask-image: linear-gradient(to right, #000 calc(100% - var(--side-bleed)), transparent 100%);
+}
+
+.card--right .card__bg {
+  left: calc(0px - var(--side-bleed));
+  width: calc(100% + var(--side-bleed));
+  max-width: none;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--side-bleed));
+          mask-image: linear-gradient(to right, transparent 0, #000 var(--side-bleed));
 }
 
 /* ---------- left column ------------------------------------------------- */
@@ -266,8 +273,8 @@ img { display: block; max-width: 100%; }
 .hero__copy {
   position: absolute;
   z-index: 3;
-  left: calc(var(--s) * 55);
-  right: calc(var(--s) * 55);
+  left: calc(var(--s) * 90);
+  right: calc(var(--s) * 90);
   top: max(calc(var(--s) * 67), 28px);
 }
 
@@ -305,7 +312,7 @@ h1 .line--accent {
 .cta {
   position: absolute;
   z-index: 4;
-  right: max(calc(var(--s) * 28), 16px);
+  right: max(calc(var(--s) * 80), 24px);
   bottom: max(calc(var(--s) * 28), 16px);
   display: flex;
   align-items: center;
@@ -435,9 +442,18 @@ h1 .line--accent {
     padding: 0;
   }
 
+  .card--left,
   .card--right {
     z-index: auto;
     overflow: hidden;
+  }
+
+  .card--left .card__bg {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    -webkit-mask-image: none;
+            mask-image: none;
   }
 
   .card--right .card__bg {
