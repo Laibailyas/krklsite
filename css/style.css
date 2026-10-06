@@ -176,9 +176,26 @@ img { display: block; max-width: 100%; }
 }
 
 .card--left { background: #050B2B; }
+.card--left .card__bg {
+  width: calc(100% + var(--side-bleed));
+  max-width: none;
+  z-index: 0;
+  object-position: center;
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--side-bleed)), transparent 100%);
+          mask-image: linear-gradient(to right, #000 calc(100% - var(--side-bleed)), transparent 100%);
+}
 .card--left::before {
   background-image: radial-gradient(ellipse at 18% 100%, rgba(2, 6, 24, .34), transparent 68%);
   filter: blur(10px);
+}
+
+.card--left::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 18% 100%, rgba(2, 6, 24, .48), transparent 68%);
 }
 
 .card--right::after {
@@ -255,6 +272,10 @@ img { display: block; max-width: 100%; }
 .menu__trigger[aria-expanded="true"] .txt {
   transform: translateY(-3px);
 }
+.menu__trigger[aria-expanded="true"] .num,
+.menu__trigger[aria-expanded="true"] .dash {
+  transform: translateY(-3px);
+}
 .menu__trigger[aria-expanded="true"] { color: #fff; }
 .menu__trigger[aria-expanded="true"] .menu__description {
   max-height: 5em;
@@ -269,6 +290,7 @@ img { display: block; max-width: 100%; }
   width: calc(var(--s) * 29);
   font-variant-numeric: tabular-nums;
   opacity: .8;
+  transition: transform .3s ease;
 }
 .menu .dash {
   grid-column: 2;
@@ -285,6 +307,10 @@ img { display: block; max-width: 100%; }
 .menu__trigger:focus-visible { color: #fff; }
 .menu__trigger:hover .dash,
 .menu__trigger:focus-visible .dash { transform: scaleX(1.5); }
+.menu__trigger[aria-expanded="true"]:hover .dash,
+.menu__trigger[aria-expanded="true"]:focus-visible .dash {
+  transform: translateY(-3px) scaleX(1.5);
+}
 
 /* ---------- center column (video) -------------------------------------- */
 
@@ -516,6 +542,14 @@ h1 .line--accent {
   }
 
   .card--right .card__bg {
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    -webkit-mask-image: none;
+            mask-image: none;
+  }
+
+  .card--left .card__bg {
     left: 0;
     width: 100%;
     max-width: 100%;
