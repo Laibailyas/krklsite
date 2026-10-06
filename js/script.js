@@ -7,7 +7,6 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
-  /* Category descriptions open on click, not hover. Keep one expanded at a time. */
   const menuTriggers = document.querySelectorAll('.menu__trigger');
   menuTriggers.forEach((trigger) => {
     trigger.addEventListener('click', (event) => {
@@ -70,7 +69,6 @@
     });
   }
 
-  /* 1 — start the entrance once web fonts are in, so text never jumps ---- */
   const reveal = () => root.classList.add('is-ready');
   if (document.fonts && document.fonts.ready) {
     Promise.race([
@@ -138,10 +136,7 @@
   reduceMotion.addEventListener('change', () => {
     if (reduceMotion.matches) { userPaused = true; video.pause(); }
   });
-
-  /* 3 — don't burn battery on a video nobody can see (stacked mobile layout,
-         hidden tab) ---------------------------------------------------- */
-  if ('IntersectionObserver' in window) {
+if ('IntersectionObserver' in window) {
     new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) video.pause();
       else if (!userPaused && !shouldStayStill()) play();

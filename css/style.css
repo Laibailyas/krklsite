@@ -153,7 +153,7 @@ img { display: block; max-width: 100%; }
   -webkit-user-drag: none;
 }
 
-/* faint 12px grid that sits over the two side cards */
+
 .card--side::before {
   content: "";
   position: absolute;
@@ -330,7 +330,6 @@ img { display: block; max-width: 100%; }
   background: transparent;
 }
 
-/* keeps the headline legible whatever footage is dropped in */
 .hero__scrim {
   position: absolute;
   inset: 0;
@@ -437,7 +436,22 @@ h1 .line--accent {
 .cta:hover svg { transform: translateX(4px); }
 .cta:focus-visible { outline-offset: 6px; border-radius: 999px; }
 
-/* pause / play — invisible until hovered or focused, so the frame stays clean */
+.hero__copyright {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: max(calc(var(--s) * 20), 14px);
+  transform: translateX(-50%);
+  margin: 0;
+  color: rgba(185, 193, 226, .54);
+  font: 400 max(8px, calc(var(--s) * 9)) / 1.2 var(--font-sans);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: .8;
+}
+
 .video-toggle {
   position: absolute;
   z-index: 5;
@@ -494,9 +508,7 @@ h1 .line--accent {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* hidden only until the script flags the page ready; the animations use
-     fill-mode "backwards" so hover transforms still work afterwards */
-  .js:not(.is-ready) .card,
+ .js:not(.is-ready) .card,
   .js:not(.is-ready) .eyebrow,
   .js:not(.is-ready) h1 .line,
   .js:not(.is-ready) .cta { opacity: 0; }
