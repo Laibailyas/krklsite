@@ -476,7 +476,7 @@ h1 .line--accent {
   margin: 0;
   font: 400 max(11px, calc(var(--s) * 12)) / 1.5 var(--font-sans);
   letter-spacing: .02em;
-  text-transform: capitalize;
+  text-transform: none;
   color: var(--meta);
 }
 .caption::before {
