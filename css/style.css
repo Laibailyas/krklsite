@@ -213,24 +213,65 @@ img { display: block; max-width: 100%; }
   bottom: calc(var(--s) * 35);
 }
 .menu ol { margin: 0; padding: 0; list-style: none; }
+.menu li { transition: margin .35s ease; }
 
 .menu a {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
   align-items: center;
-  height: calc(var(--s) * 32.5);
+  min-height: calc(var(--s) * 32.5);
   min-height: 28px;
-  font: 400 var(--fs-meta) / 1 var(--font-sans);
+  font: 400 var(--fs-meta) / 1.25 var(--font-sans);
   letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--meta);
   transition: color .2s ease;
 }
+.menu .txt {
+  grid-column: 3;
+  grid-row: 1;
+  transition: transform .3s ease;
+}
+.menu__description {
+  grid-column: 3;
+  grid-row: 2;
+  min-height: 0;
+  overflow: hidden;
+  max-width: 22ch;
+  max-height: 0;
+  padding-top: 0;
+  font-size: max(9px, calc(var(--s) * 10));
+  line-height: 1.5;
+  letter-spacing: .02em;
+  text-transform: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: max-height .35s ease, padding-top .35s ease, opacity .25s ease, transform .35s ease;
+}
+.menu li:hover .txt,
+.menu li:focus-within .txt {
+  transform: translateY(-3px);
+}
+.menu li:hover .menu__description,
+.menu li:focus-within .menu__description {
+  max-height: 5em;
+  padding-top: 6px;
+  opacity: .78;
+  transform: translateY(0);
+}
+.menu li:hover,
+.menu li:focus-within { margin-bottom: 16px; }
 .menu .num {
+  grid-column: 1;
+  grid-row: 1;
   width: calc(var(--s) * 29);
   font-variant-numeric: tabular-nums;
   opacity: .8;
 }
 .menu .dash {
+  grid-column: 2;
+  grid-row: 1;
   width: calc(var(--s) * 16);
   height: 1px;
   margin-right: calc(var(--s) * 15);
@@ -402,12 +443,13 @@ h1 .line--accent {
 .caption {
   position: absolute;
   z-index: 3;
-  left: calc(var(--s) * 42);
+  left: clamp(12px, calc(var(--s) * 24), 24px);
+  right: clamp(12px, calc(var(--s) * 18), 18px);
   bottom: calc(var(--s) * 41);
   margin: 0;
-  font: 400 var(--fs-meta) / 1.5 var(--font-sans);
-  letter-spacing: .23em;
-  text-transform: uppercase;
+  font: 400 max(11px, calc(var(--s) * 12)) / 1.5 var(--font-sans);
+  letter-spacing: .02em;
+  text-transform: capitalize;
   color: var(--meta);
 }
 .caption::before {
@@ -503,6 +545,6 @@ h1 .line--accent {
   }
   .cta svg { width: 13px; }
 
-  .caption { left: 24px; bottom: 24px; }
+  .caption { left: 24px; right: 24px; bottom: 24px; }
   .video-toggle { top: 16px; right: 16px; opacity: .9; }
 }
