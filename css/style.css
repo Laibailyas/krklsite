@@ -176,7 +176,10 @@ img { display: block; max-width: 100%; }
 }
 
 .card--left { background: #050B2B; }
-.card--left::before { display: none; }
+.card--left::before {
+  background-image: radial-gradient(ellipse at 18% 100%, rgba(2, 6, 24, .34), transparent 68%);
+  filter: blur(10px);
+}
 
 .card--right::after {
   content: "";
@@ -215,7 +218,7 @@ img { display: block; max-width: 100%; }
 .menu ol { margin: 0; padding: 0; list-style: none; }
 .menu li { transition: margin .35s ease; }
 
-.menu a {
+.menu__trigger {
   display: grid;
   grid-template-columns: auto auto minmax(0, 1fr);
   grid-template-rows: auto auto;
@@ -249,19 +252,17 @@ img { display: block; max-width: 100%; }
   transform: translateY(10px);
   transition: max-height .35s ease, padding-top .35s ease, opacity .25s ease, transform .35s ease;
 }
-.menu li:hover .txt,
-.menu li:focus-within .txt {
+.menu__trigger[aria-expanded="true"] .txt {
   transform: translateY(-3px);
 }
-.menu li:hover .menu__description,
-.menu li:focus-within .menu__description {
+.menu__trigger[aria-expanded="true"] { color: #fff; }
+.menu__trigger[aria-expanded="true"] .menu__description {
   max-height: 5em;
   padding-top: 6px;
-  opacity: .78;
+  opacity: 1;
   transform: translateY(0);
 }
-.menu li:hover,
-.menu li:focus-within { margin-bottom: 16px; }
+.menu li.is-expanded { margin-bottom: 16px; }
 .menu .num {
   grid-column: 1;
   grid-row: 1;
@@ -280,10 +281,10 @@ img { display: block; max-width: 100%; }
   transform-origin: left center;
   transition: transform .25s ease;
 }
-.menu a:hover,
-.menu a:focus-visible { color: #fff; }
-.menu a:hover .dash,
-.menu a:focus-visible .dash { transform: scaleX(1.5); }
+.menu__trigger:hover,
+.menu__trigger:focus-visible { color: #fff; }
+.menu__trigger:hover .dash,
+.menu__trigger:focus-visible .dash { transform: scaleX(1.5); }
 
 /* ---------- center column (video) -------------------------------------- */
 

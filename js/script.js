@@ -7,6 +7,20 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const saveData = Boolean(navigator.connection && navigator.connection.saveData);
 
+  /* Category descriptions open on click, not hover. Keep one expanded at a time. */
+  const menuTriggers = document.querySelectorAll('.menu__trigger');
+  menuTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      const willExpand = trigger.getAttribute('aria-expanded') !== 'true';
+      menuTriggers.forEach((item) => {
+        const expanded = item === trigger && willExpand;
+        item.setAttribute('aria-expanded', String(expanded));
+        item.parentElement.classList.toggle('is-expanded', expanded);
+      });
+    });
+  });
+
   /* A pointer dot leads while the ring trails for fine pointers. */
   const cursor = document.querySelector('.custom-cursor');
   const cursorDot = document.querySelector('.custom-cursor__dot');
